@@ -1,0 +1,45 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Livros</title>
+</head>
+  <form action="/Livros-Form" method="post">
+    <div>
+      <label for="Nome_Livros">Nome Livro:</label>
+      <input type="text" id="nm_livro"/>
+    </div>
+    <div>
+        <label for="Sinopse_Livro">Sinopse:</label>
+        <textarea type="text" id="ds_sinopse"></textarea>
+    </div>
+    <div>
+        <label for="Link_Externo">Link Externo:</label>
+        <input type="text" id="ds_link_externo"/>
+    </div>
+    <div>
+      <label for="Preco">Preço:</label>
+      <input type="number" step="0.01" id="vl_preco"/>
+    </div>
+    <div>
+        <label for="Publicacao_Livro">Publicação:</label>
+        <input type="date" id="dt_publicacao"/>
+    </div>
+    <div>
+        <label for="Capa">Capa:</label>
+        <input type="file" id="img_capa"/>
+    </div>
+    <div>
+        <label for="Disponibilidade">Disponibilidade </label>
+        <input type="checkbox" id="sn_disponib" value="1"/>
+    </div>
+    <div>
+        <label for="Destaque">Destaque </label>
+        <input type="checkbox" id="sn_destaque" value="1"/>
+    </div>
+    <div>
+        <label for="Cronologia_Livro">Cronologia: </label>
+        <input type="int" id="tp_cronologia"/>
+    </div>
+  </form>
+</html>

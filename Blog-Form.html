@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Blog_e_Notícias</title>
+</head>
+  <form action="conexao.php" method="post">
+    <div>
+      <label for="Título_Blog">Título:</label>
+      <input type="text" id="nm_titulo"/>
+    </div>
+    <div>
+        <label for="Cabecalho">Cabeçalho:</label>
+        <input type="file" id="img_cabecalho"/>
+    </div>
+    <div>
+        <label for="Desc_Blog">Blog:</label>
+        <textarea type="text" id="ds_blog"></textarea>
+    </div>
+    <div>
+        <label for="Tipo_Blog">Tipo:</label>
+        <input type="text" id="tp_blog"/>
+    </div>    
+    <div>
+        <label for="Publicacao_Blog">Publicação:</label>
+        <input type="date" id="dt_publicacao"/>
+    </div>
+    <div>
+        <label for="Criacao">Criação:  </label>
+        <input type="date" id="dt_criacao" value="1"/>
+    </div>
+    <div>
+        <label for="Visualizar_Conto">Visualizar </label>
+        <input type="checkbox" id="sn_disponib" value="1"/>
+    </div>
+  </form>
+</html>
