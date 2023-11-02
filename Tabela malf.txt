@@ -1,0 +1,121 @@
+CREATE TABLE Universo(
+	cd_Universo INT NOT NULL AUTO_INCREMENT,	
+    	nm_Universo VARCHAR(100) NOT NULL,
+	ds_Universo VARCHAR(255) NOT NULL,    
+    	CONSTRAINT pk_Universo PRIMARY KEY(cd_Universo)
+);
+
+CREATE TABLE Livros(
+    	cd_Livro INT NOT NULL AUTO_INCREMENT,
+	nm_Livro VARCHAR(100) NOT NULL,
+    	cd_Universo INT NOT NULL,
+    	ds_Sinopse VARCHAR(255) NOT NULL,   
+    	ds_LinkExterno VARCHAR(255) NOT NULL,  
+    	vl_Preco FLOAT(4,2) NOT NULL,   
+    	img_Capa VARCHAR(255) NOT NULL,   
+    	dt_Publicacao DATE NOT NULL,   
+    	sn_Disponibilidade BOOLEAN NOT NULL,   
+    	sn_Destaque BOOLEAN NOT NULL,
+    	CONSTRAINT pk_Livro PRIMARY KEY(cd_Livro),
+	CONSTRAINT fk_Universo FOREIGN KEY(cd_Universo) REFERENCES Universo(cd_Universo)	    
+);
+
+CREATE TABLE Contos(
+    	cd_Conto INT NOT NULL AUTO_INCREMENT,
+	nm_Conto VARCHAR(100) NOT NULL,
+    	cd_Universo INT NOT NULL,
+    	ds_Sinopse VARCHAR(255) NOT NULL, 
+    	ds_Conto_HTML VARCHAR(255) NOT NULL, 
+    	dt_Publicacao DATE NOT NULL,  
+    	sn_Visualizar BOOLEAN NOT NULL,
+    	sn_Destaque BOOLEAN NOT NULL,
+    	cd_ContoAnterior INT NOT NULL,
+    	cd_ContoPosterior INT NOT NULL,
+    	CONSTRAINT pk_Conto PRIMARY KEY(cd_Conto),
+	CONSTRAINT fk_Contos_Universo FOREIGN KEY(cd_Universo) REFERENCES Universo(cd_Universo)		
+);
+
+CREATE TABLE Ref_Conto_Livro(
+	cd_Conto INT NOT NULL,
+    	cd_Livro INT NOT NULL,
+    	tp_Cronologia INT NOT NULL UNIQUE,
+    	CONSTRAINT pk_Ref_Conto_Livro PRIMARY KEY(cd_Conto,cd_Livro),
+    	CONSTRAINT fk_Conto_Livro_Conto FOREIGN KEY(cd_Conto) REFERENCES Contos(cd_Conto),	
+    	CONSTRAINT fk_Conto_Livro_Livro FOREIGN KEY(cd_Livro) REFERENCES Livros(cd_Livro)	
+);
+
+CREATE TABLE Blog(
+	cd_Blog INT NOT NULL AUTO_INCREMENT,
+    	nm_Titulo VARCHAR(100) NOT NULL, 
+    	img_Cabecalho VARCHAR(255) NOT NULL, 
+    	ds_Blog VARCHAR(255) NOT NULL, 
+    	cd_tp_Blog INT NOT NULL UNIQUE,
+    	ds_tp_Blog VARCHAR(255) NOT NULL,
+    	dt_Criacao DATE NOT NULL,
+    	dt_Publicacao DATE NOT NULL,
+    	sn_Visualizar BOOLEAN NOT NULL,
+    	sn_Destaque BOOLEAN NOT NULL,
+    	cd_Universo INT NOT NULL,
+    	tp_Blog VARCHAR(100) NOT NULL, 
+    	CONSTRAINT pk_Blog PRIMARY KEY(cd_Blog),
+    	CONSTRAINT fk_Blog_Universo FOREIGN KEY(cd_Universo) REFERENCES Universo(cd_Universo)	
+);
+
+
+CREATE TABLE Galeria(
+	cd_Galeria INT NOT NULL AUTO_INCREMENT,
+    	ds_Galeria VARCHAR(255) NOT NULL, 
+    	img_Galeria VARCHAR(255) NOT NULL, 
+    	cd_Universo INT NOT NULL,
+    	dt_Publicacao DATE NOT NULL,
+    	sn_Visualiza BOOLEAN NOT NULL,
+    	sn_Destaque BOOLEAN NOT NULL,
+    	CONSTRAINT pk_Galeria PRIMARY KEY(cd_Galeria),
+    	CONSTRAINT fk_Galeria_Universo FOREIGN KEY(cd_Universo) REFERENCES Universo(cd_Universo)	
+);
+
+CREATE TABLE Usuario(
+	cd_Usuario INT NOT NULL AUTO_INCREMENT,
+    	nm_Usuario VARCHAR(100) NOT NULL, 
+    	ds_Senha VARCHAR(100) NOT NULL, 
+    	dt_Criacao DATE NOT NULL,
+    	sn_Ativo BOOLEAN NOT NULL,
+    	cd_Acesso INT NOT NULL,
+    	CONSTRAINT pk_Usuario PRIMARY KEY(cd_Usuario),
+    	CONSTRAINT fk_Acessos FOREIGN KEY(cd_Acesso) REFERENCES Acessos (cd_Acesso)
+    
+);
+
+CREATE TABLE Acessos(
+	cd_Acesso INT NOT NULL UNIQUE,
+    	ds_Acesso VARCHAR(100) NOT NULL, 
+    	sn_Destaque BOOLEAN NOT NULL,
+    	sn_Livro BOOLEAN NOT NULL,
+   	sn_Conto BOOLEAN NOT NULL,
+    	sn_Blog BOOLEAN NOT NULL,
+    	sn_Galeria BOOLEAN NOT NULL,
+    	dt_Criacao DATE NOT NULL,
+    	CONSTRAINT pk_Acessos PRIMARY KEY(cd_Acesso)
+);
+
+CREATE TABLE Log_Site(
+	cd_Log INT NOT NULL AUTO_INCREMENT,
+    	cd_Universo INT NOT NULL,
+    	cd_Livro INT NOT NULL,
+    	cd_Conto INT NOT NULL,
+    	cd_Blog INT NOT NULL,
+    	cd_Galeria INT NOT NULL,
+    	tp_Acao VARCHAR(100) NOT NULL, 
+    	dt_Alteracao DATE NOT NULL,
+    	cd_Usuario INT NOT NULL UNIQUE,
+    	ds_Anterior VARCHAR(255) NOT NULL, 
+    	CONSTRAINT pk_Log PRIMARY KEY(cd_Log),
+    	CONSTRAINT fk_Log_Universo FOREIGN KEY(cd_Universo) REFERENCES Universo(cd_Universo),  
+    	CONSTRAINT fk_Log_Livro FOREIGN KEY(cd_Livro) REFERENCES Livros(cd_Livro),	
+    	CONSTRAINT fk_Log_Conto FOREIGN KEY(cd_Conto) REFERENCES Contos(cd_Conto),	
+    	CONSTRAINT fk_Log_Blog FOREIGN KEY(cd_Blog) REFERENCES Blog(cd_Blog),	    
+    	CONSTRAINT fk_Log_Galeria FOREIGN KEY(cd_Galeria)REFERENCES Galeria (cd_Galeria),
+    	CONSTRAINT fk_Log_Usuario FOREIGN KEY(cd_Usuario)REFERENCES Usuario (cd_Usuario)
+)
+
+
